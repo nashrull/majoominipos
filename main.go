@@ -34,6 +34,7 @@ func main() {
 	r := gin.Default()
 	routes.ProductsRoute(r, db)
 	routes.MerchantRoutes(r, db)
+	routes.OutletRoutes(r, db)
 	err := r.Run()
 	if err != nil {
 		panic(err)

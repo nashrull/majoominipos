@@ -1,8 +1,8 @@
 package models
 
-type Outlet struct {
-	id          int
+type Outlets struct {
+	Id          int
 	Nama        string
 	Alamat      string
-	Id_merchant Merchants
+	Id_merchant int
 }

@@ -1,6 +1,21 @@
 package helpers
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"github.com/dgrijalva/jwt-go"
+	"golang.org/x/crypto/bcrypt"
+)
+
+type authCustomClaims struct {
+	Id     int
+	Nama   string
+	Status string
+	jwt.StandardClaims
+}
+
+type jwtServices struct {
+	secretKey string
+	issure    string
+}
 
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)

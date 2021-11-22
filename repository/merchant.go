@@ -14,6 +14,12 @@ func MerchantRepositoryProvider(dbProv *gorm.DB) MerchantRepository {
 	return MerchantRepository{DB: dbProv}
 }
 
+func (p *MerchantRepository) GetAll() []models.Merchants {
+	var merchant []models.Merchants
+	p.DB.Find(&merchant)
+	return merchant
+}
+
 func (p *MerchantRepository) FindByUsername(username string) (models.Merchants, error) {
 	var merchant models.Merchants
 	m := p.DB.Where("username = ?", username).Find(&merchant)
@@ -29,4 +35,8 @@ func (p *MerchantRepository) Save(merchant models.Merchants) (models.Merchants, 
 		return merchant, merchantSave.Error
 	}
 	return merchant, nil
+}
+
+func (p *MerchantRepository) Delete(id int) error {
+	return p.DB.Delete(models.Merchants{}, id).Error
 }

@@ -2,6 +2,7 @@ package routes
 
 import (
 	"majoominipos/api"
+	"majoominipos/middleware"
 	"majoominipos/repository"
 	"majoominipos/service"
 
@@ -10,11 +11,15 @@ import (
 )
 
 func MerchantRoutes(r *gin.Engine, db *gorm.DB) {
-	productRepo := repository.MerchantRepositoryProvider(db)
-	productService := service.MerchantServiceProvider(productRepo)
-	productApi := api.MerchantApiProvider(productService)
+	merchantRepo := repository.MerchantRepositoryProvider(db)
+	merchantService := service.MerchantServiceProvider(merchantRepo)
+	merchantApi := api.MerchantApiProvider(merchantService)
 
 	merchantRoute := r.Group("merchant")
-	merchantRoute.POST("", productApi.Create)
-	merchantRoute.POST("login", productApi.Login)
+	merchantRoute.POST("", merchantApi.Create)
+	merchantRoute.GET("", merchantApi.GetAll)
+	merchantRoute.POST("login", merchantApi.Login)
+	merchantRoute.Use(middleware.ValidateMerchant)
+	merchantRoute.DELETE(":id", merchantApi.Delete)
+	merchantRoute.PUT("", merchantApi.Update)
 }

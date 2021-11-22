@@ -13,8 +13,8 @@ func ProviderProductService(p repository.ProductRepository) ProductsServices {
 	return ProductsServices{Repositori: p}
 }
 
-func (p *ProductsServices) FindAll() []models.Products {
-	return p.Repositori.FindAll()
+func (p *ProductsServices) FindAll(id_merchant int) []models.Products {
+	return p.Repositori.FindAll(id_merchant)
 }
 
 func (p *ProductsServices) FindByID(id int) models.Products {
@@ -23,4 +23,8 @@ func (p *ProductsServices) FindByID(id int) models.Products {
 
 func (p *ProductsServices) Save(product models.Products) (models.Products, error) {
 	return p.Repositori.Save(product)
+}
+
+func (p *ProductsServices) Delete(id int) error {
+	return p.Repositori.Delete(id)
 }
